@@ -9,12 +9,14 @@ import { PracticeModule } from './practice/practice.module';
 import { AuthModule } from './auth/auth.module';
 import { QuestionModule } from './question/question.module';
 import { Question } from './typeorm/entities/Question.entity';
+import { configValidtionSchema } from './config.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [`.env.stage.${process.env.STAGE}`],
+      validationSchema: configValidtionSchema
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
