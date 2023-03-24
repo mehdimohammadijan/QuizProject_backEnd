@@ -1,4 +1,5 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Practice } from './Practice.entity';
 
 @Entity()
 export class User {
@@ -24,4 +25,9 @@ export class User {
   setCreatedAt() {
     this.createdAt = new Date();
   }
+
+  @OneToMany((_type) => Practice, (practice) => practice.user, {
+    eager: true,
+  })
+  practices: Practice[];
 }

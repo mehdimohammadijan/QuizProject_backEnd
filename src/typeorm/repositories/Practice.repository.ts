@@ -2,6 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { CreatePracticeDto } from 'src/practice/dto/create-practice.dto';
 import { DataSource, Repository } from 'typeorm';
 import { Practice } from '../entities/Practice.entity';
+import { User } from '../entities/User.entity';
 
 @Injectable()
 export class PracticeRepository extends Repository<Practice> {
@@ -17,8 +18,9 @@ export class PracticeRepository extends Repository<Practice> {
 
   async createPractice(
     createPracticeDto: CreatePracticeDto,
+    user: User,
   ): Promise<Practice> {
-    const practice = this.create({ ...createPracticeDto });
+    const practice = this.create({ ...createPracticeDto, user });
     try {
       await this.save(practice);
       return practice;

@@ -1,4 +1,14 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Question } from './Question.entity';
+import { User } from './User.entity';
+import { Exclude } from '@nestjs/class-transformer'
 
 @Entity()
 export class Practice {
@@ -18,4 +28,13 @@ export class Practice {
   setCreatedAt() {
     this.createdAt = new Date();
   }
+
+  @OneToMany((_type) => Question, (question) => question.practice, {
+    eager: true,
+  })
+  questions: Question[];
+
+  @ManyToOne(() => User, (user) => user.practices, { eager: false })
+  @Exclude({ toPlainOnly: true })
+  user: User;
 }

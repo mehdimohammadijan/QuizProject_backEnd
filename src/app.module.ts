@@ -8,6 +8,7 @@ import { Practice } from './typeorm/entities/Practice.entity';
 import { PracticeModule } from './practice/practice.module';
 import { AuthModule } from './auth/auth.module';
 import { QuestionModule } from './question/question.module';
+import { Question } from './typeorm/entities/Question.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { QuestionModule } from './question/question.module';
       database: 'quiz',
       autoLoadEntities: true,
       synchronize: true,
-      entities: [Practice, User],
+      entities: [Practice, User, Question],
     }),
     PracticeModule,
     AuthModule,

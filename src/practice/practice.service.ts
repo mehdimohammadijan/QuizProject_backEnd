@@ -9,13 +9,17 @@ import { PracticeRepository } from 'src/typeorm/repositories/Practice.repository
 import { CreatePracticeDto } from './dto/create-practice.dto';
 import { isUUID } from 'class-validator';
 import { FullDetailPractice } from './dto/saveList-practice.dto';
+import { User } from 'src/typeorm/entities/User.entity';
 
 @Injectable()
 export class PracticeService {
   constructor(private readonly practiceRepository: PracticeRepository) {}
 
-  createPractice(createPracticeDto: CreatePracticeDto): Promise<Practice> {
-    return this.practiceRepository.createPractice(createPracticeDto);
+  createPractice(
+    createPracticeDto: CreatePracticeDto,
+    user: User,
+  ): Promise<Practice> {
+    return this.practiceRepository.createPractice(createPracticeDto, user);
   }
 
   getPractices(): Promise<Practice[]> {
@@ -56,7 +60,10 @@ export class PracticeService {
       throw new NotFoundException(`Practice with id ${id} is not found`);
     }
   }
-  async saveList(fullDetailDto: FullDetailPractice[]): Promise<string> {
+  async saveList(
+    fullDetailDto: FullDetailPractice[],
+    user: User,
+  ): Promise<string> {
     try {
       for (let index = 0; index < fullDetailDto.length; index++) {
         const newPractice: CreatePracticeDto = {
@@ -64,7 +71,7 @@ export class PracticeService {
           description: fullDetailDto[index].description,
         };
         if (fullDetailDto[index].opt === 'new') {
-          this.createPractice(newPractice);
+          this.createPractice(newPractice, user);
         } else if (fullDetailDto[index].opt === 'edit') {
           this.updatePractice(fullDetailDto[index].id, newPractice);
         } else if (fullDetailDto[index].opt === 'delete') {
