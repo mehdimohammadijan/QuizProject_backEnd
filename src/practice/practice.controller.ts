@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common/decorators';
+import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 

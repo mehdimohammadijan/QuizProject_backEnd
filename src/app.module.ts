@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,17 +12,26 @@ import { Question } from './typeorm/entities/Question.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'quiz',
-      autoLoadEntities: true,
-      synchronize: true,
-      entities: [Practice, User, Question],
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: [`.env.stage.${process.env.STAGE}`],
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'postgres',
+        autoLoadEntities: true,
+        synchronize: true,
+        host: configService.get('DB_HOST'),
+        port: parseInt(configService.get('DB_PORT')),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
+        entities: [Question, User, Practice]
+      }),
+    }),
+
     PracticeModule,
     AuthModule,
     QuestionModule,
