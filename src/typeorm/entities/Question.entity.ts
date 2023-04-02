@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ColumnRowOption } from './Column-Row.option.entity';
+import { FrontOption } from './Front.option.entity';
 import { Practice } from './Practice.entity';
 
 @Entity()
@@ -14,4 +22,18 @@ export class Question {
 
   @ManyToOne(() => Practice, (practice) => practice.questions, { eager: false })
   practice: Practice;
+
+  @OneToMany(
+    (_type) => ColumnRowOption,
+    (columnRowOption) => columnRowOption.question,
+    {
+      eager: true,
+    },
+  )
+  columnRowOptions: ColumnRowOption[];
+
+  @OneToMany((_type) => FrontOption, (frontOption) => frontOption.question, {
+    eager: true,
+  })
+  frontOptions: FrontOption[];
 }

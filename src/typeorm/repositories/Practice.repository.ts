@@ -16,6 +16,7 @@ export class PracticeRepository extends Repository<Practice> {
     return practices;
   }
 
+
   async createPractice(
     createPracticeDto: CreatePracticeDto,
     user: User,

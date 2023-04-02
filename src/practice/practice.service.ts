@@ -71,11 +71,11 @@ export class PracticeService {
           description: fullDetailDto[index].description,
         };
         if (fullDetailDto[index].opt === 'new') {
-          this.createPractice(newPractice, user);
+          await this.createPractice(newPractice, user);
         } else if (fullDetailDto[index].opt === 'edit') {
-          this.updatePractice(fullDetailDto[index].id, newPractice);
+          await this.updatePractice(fullDetailDto[index].id, newPractice);
         } else if (fullDetailDto[index].opt === 'delete') {
-          this.deletePractice(fullDetailDto[index].id);
+          await this.deletePractice(fullDetailDto[index].id);
         }
       }
     } catch (error) {

@@ -10,13 +10,15 @@ import { AuthModule } from './auth/auth.module';
 import { QuestionModule } from './question/question.module';
 import { Question } from './typeorm/entities/Question.entity';
 import { configValidtionSchema } from './config.schema';
+import { ColumnRowOption } from './typeorm/entities/Column-Row.option.entity';
+import { FrontOption } from './typeorm/entities/Front.option.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [`.env.stage.${process.env.STAGE}`],
-      validationSchema: configValidtionSchema
+      validationSchema: configValidtionSchema,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -30,7 +32,7 @@ import { configValidtionSchema } from './config.schema';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Question, User, Practice]
+        entities: [Question, User, Practice, ColumnRowOption, FrontOption]
       }),
     }),
 
