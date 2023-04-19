@@ -30,6 +30,7 @@ export class Practice {
   }
 
   @OneToMany((_type) => Question, (question) => question.practice, {
+    onDelete: 'CASCADE',
     eager: true,
   })
   questions: Question[];

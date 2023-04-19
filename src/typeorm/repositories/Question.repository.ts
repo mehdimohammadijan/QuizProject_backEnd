@@ -6,13 +6,15 @@ import { CreateQuestionDto } from 'src/question/dto/create-question.dto';
 import { DataSource, Repository } from 'typeorm';
 import { Practice } from '../entities/Practice.entity';
 import { Question } from '../entities/Question.entity';
-import { User } from '../entities/User.entity';
+import { UpdateQuestionDto } from 'src/question/dto/update-question.dto'; 
 
 @Injectable()
 export class QuestionRepository extends Repository<Question> {
   constructor(private dataSource: DataSource) {
     super(Question, dataSource.createEntityManager());
   }
+
+
   async createQuestion(
     createQuestionDto: CreateQuestionDto,
     practice: Practice
@@ -29,4 +31,6 @@ export class QuestionRepository extends Repository<Question> {
       throw new InternalServerErrorException('question is not saved!');
     }
   }
+
+
 }

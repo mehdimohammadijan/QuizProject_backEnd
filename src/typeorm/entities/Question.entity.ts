@@ -26,13 +26,12 @@ export class Question {
   @OneToMany(
     (_type) => ColumnRowOption,
     (columnRowOption) => columnRowOption.question,
-    {
-      eager: true,
-    },
+    { onDelete: 'CASCADE', eager: true },
   )
   columnRowOptions: ColumnRowOption[];
 
   @OneToMany((_type) => FrontOption, (frontOption) => frontOption.question, {
+    onDelete: 'CASCADE',
     eager: true,
   })
   frontOptions: FrontOption[];
