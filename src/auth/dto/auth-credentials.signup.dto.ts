@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class UserCredentialSignUpDto {
   @IsEmail()
@@ -15,8 +15,8 @@ export class UserCredentialSignUpDto {
   @IsString()
   @MinLength(8)
   @MaxLength(50)
-  // @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-  //   message: 'pasword is too weak',
-  // })
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message: 'pasword is too weak',
+  })
   password: string;
 }

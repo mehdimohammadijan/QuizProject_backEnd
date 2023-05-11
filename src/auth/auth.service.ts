@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt/dist';
 import { JwtPayload } from './jwt-payload.interface';
-import { User } from 'src/typeorm/entities/User.entity';
+import { ResponseUser } from '../types/Auth';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +15,15 @@ export class AuthService {
     private readonly userRepository: UserRepository,
     private jwtService: JwtService,
   ) {}
+
+  async getUsers(): Promise<ResponseUser[]> {
+    const users = await this.userRepository.find();
+    return users.map((user) => ({
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    }));
+  }
 
   async signUp(authCredentialsDto: UserCredentialSignUpDto): Promise<void> {
     return this.userRepository.createUser(authCredentialsDto);
