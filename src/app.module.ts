@@ -12,6 +12,8 @@ import { Question } from './typeorm/entities/Question.entity';
 import { configValidtionSchema } from './config.schema';
 import { ColumnRowOption } from './typeorm/entities/Column-Row.option.entity';
 import { FrontOption } from './typeorm/entities/Front.option.entity';
+import { UserPractice } from './typeorm/entities/UserPractice.entity';
+import { UserPracticeModule } from './user-practice/user-practice.module';
 
 @Module({
   imports: [
@@ -32,13 +34,21 @@ import { FrontOption } from './typeorm/entities/Front.option.entity';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Question, User, Practice, ColumnRowOption, FrontOption]
+        entities: [
+          Question,
+          User,
+          Practice,
+          ColumnRowOption,
+          FrontOption,
+          UserPractice,
+        ],
       }),
     }),
 
     PracticeModule,
     AuthModule,
     QuestionModule,
+    UserPracticeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

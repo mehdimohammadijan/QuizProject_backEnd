@@ -4,3 +4,8 @@ export interface Practice {
   decripton: string;
   createdAt: string;
 }
+export interface AssignedPractice {
+  email: string;
+  quiz: string;
+  quizId: string;
+}

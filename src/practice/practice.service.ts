@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -10,10 +9,14 @@ import { CreatePracticeDto } from './dto/create-practice.dto';
 import { isUUID } from 'class-validator';
 import { FullDetailPractice } from './dto/saveList-practice.dto';
 import { User } from 'src/typeorm/entities/User.entity';
+import { UserRepository } from 'src/typeorm/repositories/User.repository';
 
 @Injectable()
 export class PracticeService {
-  constructor(private readonly practiceRepository: PracticeRepository) {}
+  constructor(
+    private readonly practiceRepository: PracticeRepository,
+    private readonly userRepository: UserRepository,
+  ) {}
 
   createPractice(
     createPracticeDto: CreatePracticeDto,
@@ -83,4 +86,26 @@ export class PracticeService {
     }
     return 'SuccessFully Updated!';
   }
+  // async assignPracticeToUsers(
+  //   data: { email: string; quiz: string; quizId: string }[],
+  // ): Promise<string> {
+  //   try {
+  //     for (const { email, quiz, quizId } of data) {
+  //       const user = await this.userRepository.findOneBy({ email });
+  //       console.log(user.userPractices)
+  //       // const quizEntity = await this.practiceRepository.findOneBy({
+  //       //   id: quizId,
+  //       // });
+  //       // const userPractice = new UserPractice();
+  //       // userPractice.user = user;
+  //       // userPractice.practice = quizEntity;
+
+  //       // await this.userPracticeRepository.save(userPractice);
+  //       return 'success';
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new InternalServerErrorException('Operation failed', error);
+  //   }
+  // }
 }

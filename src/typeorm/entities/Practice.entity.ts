@@ -2,13 +2,17 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  
 } from 'typeorm';
 import { Question } from './Question.entity';
 import { User } from './User.entity';
 import { Exclude } from '@nestjs/class-transformer'
+import { UserPractice } from './UserPractice.entity';
+
 
 @Entity()
 export class Practice {
@@ -38,4 +42,11 @@ export class Practice {
   @ManyToOne(() => User, (user) => user.practices, { eager: false })
   @Exclude({ toPlainOnly: true })
   user: User;
+
+  @OneToMany(() => UserPractice, (userPractice) => userPractice.practice)
+  userPractices: UserPractice[]
+  // @ManyToMany(() => User, (user) => user.userPractices)
+  // users: User[]
+
+
 }

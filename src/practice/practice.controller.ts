@@ -15,9 +15,10 @@ import { User } from 'src/typeorm/entities/User.entity';
 import { CreatePracticeDto } from './dto/create-practice.dto';
 import { FullDetailPractice } from './dto/saveList-practice.dto';
 import { PracticeService } from './practice.service';
+import { AssignedPracticeDto } from 'src/user-practice/dto/assign-practice.dto';
 
 @Controller('practices')
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 export class PracticeController {
   constructor(private practiceService: PracticeService) {}
   @Post()
@@ -58,4 +59,11 @@ export class PracticeController {
   ): Promise<string> {
     return this.practiceService.saveList(saveListDto, user);
   }
+
+  // @Post('/assignPractice')
+  // assignPractice(
+  //   @Body() assignPractices: AssignedPracticeDto[],
+  // ): Promise<string> {
+  //   return this.practiceService.assignPracticeToUsers(assignPractices);
+  // }
 }

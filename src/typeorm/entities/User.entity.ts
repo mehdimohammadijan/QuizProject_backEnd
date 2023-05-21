@@ -1,5 +1,14 @@
-import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Practice } from './Practice.entity';
+import { UserPractice } from './UserPractice.entity';
 
 @Entity()
 export class User {
@@ -30,4 +39,10 @@ export class User {
     eager: true,
   })
   practices: Practice[];
+
+  @OneToMany(() => UserPractice, (userPractice) => userPractice.user)
+  userPractices: UserPractice[];
+  // @ManyToMany(() => Practice, (practice) => practice.users)
+  // @JoinTable()
+  // userPractices: Practice[];
 }

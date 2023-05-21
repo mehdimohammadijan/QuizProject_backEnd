@@ -21,7 +21,7 @@ export class PracticeRepository extends Repository<Practice> {
     createPracticeDto: CreatePracticeDto,
     user: User,
   ): Promise<Practice> {
-    const practice = this.create({ ...createPracticeDto, user });
+    const practice = this.create({ ...createPracticeDto });
     try {
       await this.save(practice);
       return practice;
